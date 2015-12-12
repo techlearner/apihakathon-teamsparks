@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,10 +32,11 @@ public class Router {
 	@RequestMapping("/bigo.json")
 	public @ResponseBody String bigo(HttpServletRequest request) {
 
-		String body = request.getParameter("body");
+		String bodyEn = request.getParameter("body");
+		bodyEn = bodyEn.substring(bodyEn.indexOf(" "));
+		String body = new String(Base64.decodeBase64(bodyEn));
 		String[] values = body.split(",");
-		String typeWithNo = values[0];
-		String type = typeWithNo.split(" ")[1];
+		String type = values[0];
 		String returnVal = "processed";
 		switch(type){
 		case "PO":
