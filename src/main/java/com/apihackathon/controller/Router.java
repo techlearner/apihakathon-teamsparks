@@ -22,7 +22,7 @@ public class Router {
 		walletMap.put("7299952009", new Double(500));
 		walletMap.put("9884940292", new Double(2000));
 		walletMap.put("9742381630", new Double(700));
-		walletMap.put("9742381630", new Double(700));
+		walletMap.put("7259926494", new Double(700));
 	}
 
 	@RequestMapping("/get_menu.json")
