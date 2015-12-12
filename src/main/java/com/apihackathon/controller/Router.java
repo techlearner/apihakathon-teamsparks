@@ -62,7 +62,7 @@ public class Router {
 			walletMap.put(customerMobileNo, walletAmount);
 			response = "Your order has been placed."
 					+ " Your wallet balance is Rs."+walletAmount+". Thank you.";
-			sendEmail(response, "Order Detail", "senthil@m2p.in", "senthilkumar");
+			sendEmail(response, "Order Detail From BigO", "senthil@m2p.in", "senthilkumar");
 		} else {
 			System.out.println("Not a registered customer");
 			response = "Sorry you are not a registered customer. Please register.";
