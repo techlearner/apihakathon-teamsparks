@@ -53,6 +53,6 @@ public class Item {
     }
 
     public String toString(){
-        return StringFormatter.format("%s - %d", name, price).toString();
+        return name + " - " + price;
     }
 }
