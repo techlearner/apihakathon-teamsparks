@@ -22,6 +22,7 @@ public class Router {
 		walletMap.put("7299952009", new Double(500));
 		walletMap.put("9884940292", new Double(2000));
 		walletMap.put("9742381630", new Double(700));
+		walletMap.put("9742381630", new Double(700));
 	}
 
 	@RequestMapping("/get_menu.json")
@@ -34,6 +35,8 @@ public class Router {
 
 		String bodyEn = request.getParameter("Body");
 		String mobileNo = request.getParameter("From");
+		if (mobileNo == null)
+			mobileNo = "9884940292";
 		bodyEn = bodyEn.substring(bodyEn.indexOf(" "));
 		String body = new String(Base64.decodeBase64(bodyEn));
 //		String body = bodyEn;
