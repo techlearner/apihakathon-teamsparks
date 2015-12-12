@@ -19,10 +19,10 @@ public class Router {
 	private static Map<String, Double> walletMap = new HashMap<>();
 	
 	static {
-		walletMap.put("7299952009", new Double(500));
-		walletMap.put("9884940292", new Double(2000));
-		walletMap.put("9742381630", new Double(700));
-		walletMap.put("7259926494", new Double(700));
+		walletMap.put("07299952009", new Double(500));
+		walletMap.put("09884940292", new Double(2000));
+		walletMap.put("09742381630", new Double(700));
+		walletMap.put("07259926494", new Double(700));
 	}
 
 	@RequestMapping("/get_menu.json")
@@ -59,8 +59,8 @@ public class Router {
 		if (walletAmount != null) {
 			walletAmount -= billAmount;
 			walletMap.put(customerMobileNo, walletAmount);
-			response = "Your order has been placed and processed successfully."
-					+ " Your current wallet balance is Rs."+walletAmount+". Thank you.";
+			response = "Your order has been placed."
+					+ " Your wallet balance is Rs."+walletAmount+". Thank you.";
 		} else {
 			System.out.println("Not a registered customer");
 			response = "Sorry you are not a registered customer. Please register.";
