@@ -32,7 +32,7 @@ public class Router {
 	@RequestMapping("/bigo.json")
 	public @ResponseBody String bigo(HttpServletRequest request) {
 
-		String bodyEn = request.getParameter("body");
+		String bodyEn = request.getParameter("Body");
 		bodyEn = bodyEn.substring(bodyEn.indexOf(" "));
 		String body = new String(Base64.decodeBase64(bodyEn));
 		String[] values = body.split(",");
