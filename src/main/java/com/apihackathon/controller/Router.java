@@ -33,27 +33,20 @@ public class Router {
 	public @ResponseBody String bigo(HttpServletRequest request) {
 
 		String bodyEn = request.getParameter("Body");
+		String mobileNo = request.getParameter("From");
 		bodyEn = bodyEn.substring(bodyEn.indexOf(" "));
 		String body = new String(Base64.decodeBase64(bodyEn));
+//		String body = bodyEn;
 		String[] values = body.split(",");
 		String type = values[0];
 		String returnVal = "processed";
-		switch(type){
-		case "PO":
-			returnVal = processOrder(values);
-			break;
-		case "CO":
-			returnVal = confirmOrder(values[0]);
-			break;
-		}
+		returnVal = processOrder(values, mobileNo);
+
 		
 		return returnVal;
 	}
 
-	private String confirmOrder(String value) {
-		String values[] = value.split(" ");
-		String customerMobileNo = values[0];
-		Double billAmount = Double.parseDouble(values[2]);
+	private String confirmOrder(String customerMobileNo, Double billAmount) {
 		return processPayment(customerMobileNo, billAmount);
 	}
 
@@ -72,7 +65,7 @@ public class Router {
 		return response;
 	}
 
-	private String processOrder(String[] values) {
+	private String processOrder(String[] values, String mobileNo) {
 		String store = values[1];
 		int i = 2;
 		Double total = 0.0;
@@ -92,7 +85,8 @@ public class Router {
 
 		result = result.substring(0, result.length()-2);
 		result = result + ", Total="+total;
-		return result;
+
+		return processPayment(mobileNo, total);
 	}
 
 	private Item getItem(String code, String qty){
