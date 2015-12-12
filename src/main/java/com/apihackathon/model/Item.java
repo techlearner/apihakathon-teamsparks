@@ -1,7 +1,5 @@
 package com.apihackathon.model;
 
-import com.sun.javafx.binding.StringFormatter;
-
 /**
  * Created by prasanna on 12/12/15.
  */

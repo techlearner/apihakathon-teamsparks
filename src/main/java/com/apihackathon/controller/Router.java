@@ -9,9 +9,10 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import com.apihackathon.model.Item;
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGridException;
 
 @Controller
 public class Router {
@@ -61,6 +62,7 @@ public class Router {
 			walletMap.put(customerMobileNo, walletAmount);
 			response = "Your order has been placed."
 					+ " Your wallet balance is Rs."+walletAmount+". Thank you.";
+			sendEmail(response, "Order Detail", "senthil@m2p.in", "senthilkumar");
 		} else {
 			System.out.println("Not a registered customer");
 			response = "Sorry you are not a registered customer. Please register.";
@@ -96,6 +98,35 @@ public class Router {
 		Item item = new Item(code, qty);
 		return item;
 	}
+	
+	private void sendEmail(String body, String subject, String toMail, String toName) {
+		/*RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String params = "to="+toMail+"&toname="+toName+"text="+body+"from=ssenthilkumar.cs@gmail.com&api_user=ssenthilkumar.cs&api_key=Open@123";
+        String url = "https://api.sendgrid.com/api/mail.send.json";
+               
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> entity = new HttpEntity<String>("POST Data="+params,headers);
+        ResponseEntity<String> response =  restTemplate.postForEntity(url, entity,String.class,
+                new Object[]{url});
+        response.getBody();*/
+		
+	    SendGrid sendgrid = new SendGrid("ssenthilkumar.cs", "Open@123");
+	    SendGrid.Email email = new SendGrid.Email();
+	    email.addTo(toMail);
+	    email.setFrom("ssenthilkumar.cs@gmail.com");
+	    email.setSubject("Order Detail");
+	    email.setText(body);
+	    try {
+			SendGrid.Response response = sendgrid.send(email);
+			System.out.println(response);
+		} catch (SendGridException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	
 /*	
 	private void sendSMS() {
