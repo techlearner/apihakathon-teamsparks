@@ -1,9 +1,13 @@
 package com.apihackathon.controller;
 
+import com.apihackathon.model.Item;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 @Controller
 public class Router {
@@ -14,9 +18,12 @@ public class Router {
 	}
 	
 	@RequestMapping("/bigo.json")
-	public @ResponseBody String bigo(@RequestParam(name="bigo", required=true)String bigO) {
-		String[] values = bigO.split(" ");
-		String type = values[0];
+	public @ResponseBody String bigo(HttpServletRequest request) {
+
+		String body = request.getParameter("body");
+		String[] values = body.split(",");
+		String typeWithNo = values[0];
+		String type = typeWithNo.split(" ")[1];
 		String returnVal = "processed";
 		switch(type){
 		case "PO":
@@ -31,13 +38,35 @@ public class Router {
 	}
 
 	private String confirmOrder(String[] values) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	private String processOrder(String[] values) {
-		// TODO Auto-generated method stub
-		return null;
+		String store = values[1];
+		int i = 2;
+		Double total = 0.0;
+		String result = "";
+
+		while (i < values.length){
+			String item = values[i];
+			String iVals[] = item.split(" ");
+			String code = iVals[0];
+			String qty = iVals[1];
+			Item itemObj = getItem(code, qty);
+			result += itemObj.toString() + ", ";
+			total = itemObj.getPrice();
+			i++;
+		}
+
+		result = result.substring(0, result.length()-2);
+		result = result + ", Total="+total;
+		return result;
+	}
+
+	private Item getItem(String code, String qty){
+		Item item = new Item(code, qty);
+		return item;
 	}
 	
 	
